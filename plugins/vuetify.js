@@ -1,3 +1,4 @@
+import '@mdi/font/css/materialdesignicons.css' // Ensure you are using css-
 import Vue from 'vue'
 import {
   Vuetify,

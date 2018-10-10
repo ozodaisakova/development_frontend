@@ -32,26 +32,8 @@
       >
         <v-icon v-html="miniVariant ? 'chevron_right' : 'chevron_left'"></v-icon>
       </v-btn>
-      <v-btn
-        icon
-        @click.stop="clipped = !clipped"
-      >
-        <v-icon>web</v-icon>
-      </v-btn>
-      <v-btn
-        icon
-        @click.stop="fixed = !fixed"
-      >
-        <v-icon>remove</v-icon>
-      </v-btn>
       <v-toolbar-title v-text="title"></v-toolbar-title>
       <v-spacer></v-spacer>
-      <v-btn
-        icon
-        @click.stop="rightDrawer = !rightDrawer"
-      >
-        <v-icon>menu</v-icon>
-      </v-btn>
     </v-toolbar>
     <v-content>
       <v-container>
@@ -73,9 +55,6 @@
         </v-list-tile>
       </v-list>
     </v-navigation-drawer>
-    <v-footer :fixed="fixed" app>
-      <span>&copy; {{ new Date().getFullYear() }}</span>
-    </v-footer>
   </v-app>
 </template>
 
@@ -83,12 +62,21 @@
   export default {
     data () {
       return {
-        clipped: false,
+        clipped: true,
         drawer: true,
         fixed: false,
         items: [
-          { icon: 'apps', title: 'Welcome', to: '/' },
-          { icon: 'bubble_chart', title: 'Inspire', to: '/inspire' }
+          { icon: 'mdi-home', title: 'Главная', to: '/' },
+          { icon: 'mdi-checkbox-intermediate', title: 'Столы', to: '/1' },
+          { icon: 'mdi-seat-recline-normal', title: 'Стулья', to: '/2' },
+          { icon: 'mdi-sofa', title: 'Диваны', to: '/3' },
+          { icon: 'mdi-stove', title: 'Шкафы', to: '/4' },
+          { icon: 'mdi-hotel', title: 'Кроваты', to: '/5' },
+          { icon: 'mdi-credit-card', title: 'Оплата', to: '/inspire' },
+          { icon: 'mdi-truck-delivery', title: 'Доставка', to: '/inspire' },
+          { icon: 'mdi-phone', title: 'Контакты', to: '/inspire' },
+          { icon: 'mdi-newspaper', title: 'Новости', to: '/inspire' },
+          { icon: 'mdi-information', title: 'О нас', to: '/inspire' },
         ],
         miniVariant: false,
         right: true,
