@@ -1,5 +1,5 @@
 <template>
-  <v-app >
+  <v-app  >
     <v-navigation-drawer
       :mini-variant.sync="miniVariant"
       :clipped="clipped"
@@ -24,7 +24,7 @@
         </v-list-tile>
       </v-list>
     </v-navigation-drawer>
-    <v-toolbar fixed app :clipped-left="clipped">
+    <v-toolbar fixed app :clipped-left="clipped" color="primary" dark class="toolbar-back">
       <v-toolbar-side-icon @click="drawer = !drawer"></v-toolbar-side-icon>
       <v-btn
         icon
@@ -34,6 +34,13 @@
       </v-btn>
       <v-toolbar-title v-text="title"></v-toolbar-title>
       <v-spacer></v-spacer>
+      <v-btn icon>
+      <v-icon>mdi-cart</v-icon>
+      </v-btn>
+      <v-btn icon>
+      <v-icon>mdi-account</v-icon>
+      </v-btn>
+      
     </v-toolbar>
     <v-content>
       <v-container>
@@ -81,8 +88,13 @@
         miniVariant: false,
         right: true,
         rightDrawer: false,
-        title: 'Vuetify.js'
+        title: 'TAK - MEBEL'
       }
     }
   }
 </script>
+<style scoped>
+.toolbar-back{
+  background-color: red;
+}
+</style>
