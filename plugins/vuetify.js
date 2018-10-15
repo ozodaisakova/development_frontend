@@ -3,6 +3,8 @@ import 'vuetify/dist/vuetify.min.css'
 import Vue from 'vue'
 import {
   Vuetify,
+  VSubheader,
+  VDivider,
   VApp,
   VCard,
   VNavigationDrawer,
@@ -11,11 +13,22 @@ import {
   VBtn,
   VIcon,
   VGrid,
-  VToolbar
+  VToolbar,
+  VTextField,
+  VTooltip,
+  VImg,
+  VProgressCircular,
+  VBreadCrumbs
 } from 'vuetify'
 
 Vue.use(Vuetify, {
   components: {
+    VBreadCrumbs,
+    VProgressCircular,
+    VImg,
+    VTextField,
+    VSubheader,
+    VDivider,
     VApp,
     VCard,
     VNavigationDrawer,
@@ -24,7 +37,8 @@ Vue.use(Vuetify, {
     VBtn,
     VIcon,
     VGrid,
-    VToolbar
+    VToolbar,
+    VTooltip
   },
   
     theme: {
@@ -33,7 +47,7 @@ Vue.use(Vuetify, {
       "accent": "#82B1FF",
       "error": "#FF5252",
       "info": "#2196F3",
-      "success": "#4CAF50",
+      "success": "#13C56B",
       "warning": "#FFC107"
     }
   

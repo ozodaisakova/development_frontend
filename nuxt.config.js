@@ -3,7 +3,7 @@ export default {
   ** Headers of the page
   */
   head: {
-    title: 'tak-mebel',
+    title: 'Tak-mebel',
     meta: [
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
@@ -13,6 +13,23 @@ export default {
       { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
       { rel: 'stylesheet', href: 'https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Material+Icons' }
     ]
+  },
+  modules:['@nuxtjs/axios'],
+  axios:{    
+    baseURL: 'http://localhost:8000/api/v1/',
+    credentials : false,
+    proxy: false,
+    proxyHeaders: false,
+    debug: true,
+    retry: {
+      retries: 3
+    },
+    requestInterceptor: (config, {store}) => {
+      config.headers.common['Authorization'] = '';
+      config.headers.common['Content-Type'] = 'application/x-www-form-urlencoded;application/json';
+      return config
+    }   
+
   },
   plugins: ['~/plugins/vuetify.js'],
   css: [
@@ -26,6 +43,7 @@ export default {
   ** Build configuration
   */
   build: {
+    vendor: ['axios'],
     transpile: [/^vuetify/],
     babel: {
       plugins: [

@@ -1,30 +1,71 @@
 <template>
-  <v-layout column justify-center align-center>
-    <v-flex xs12 sm8 md6>
-      <div class="text-xs-center">
-        <img src="/v.png" alt="Vuetify.js" class="mb-5" />
+<div>
+  <div v-if="preloader" class="preloader">
+    <center>
+      <div>
+        <Preloader></Preloader>
       </div>
-      <v-card>
-        <v-card-title class="headline">Welcome to the Vuetify + Nuxt.js template</v-card-title>
-        <v-card-text>
-          <p>Vuetify is a progressive Material Design component framework for Vue.js. It was designed to empower developers to create amazing applications.</p>
-          <p>For more information on Vuetify, check out the <a href="https://vuetifyjs.com" target="_blank">documentation</a>.</p>
-          <p>If you have questions, please join the official <a href="https://chat.vuetifyjs.com/" target="_blank" title="chat">discord</a>.</p>
-          <p>Find a bug? Report it on the github <a href="https://github.com/vuetifyjs/vuetify/issues" target="_blank" title="contribute">issue board</a>.</p>
-          <p>Thank you for developing with Vuetify and I look forward to bringing more exciting features in the future.</p>
-          <div class="text-xs-right">
-            <em><small>&mdash; John Leider</small></em>
-          </div>
-          <hr class="my-3">
-          <a href="https://nuxtjs.org/" target="_blank">Nuxt Documentation</a>
-          <br>
-          <a href="https://github.com/nuxt/nuxt.js" target="_blank">Nuxt GitHub</a>
-        </v-card-text>
-        <v-card-actions>
-          <v-spacer></v-spacer>
-          <v-btn color="primary" flat nuxt to="/inspire">Continue</v-btn>
-        </v-card-actions>
-      </v-card>
-    </v-flex>
-  </v-layout>
+    </center>
+  </div>
+  <p v-else>    
+    {{posts}} 
+    <v-img :src="`~/assets/images/image_placeholder.png`"></v-img>
+    </p>
+</div>
 </template>
+<script>
+import Preloader from '~/components/Preloader.vue'
+export default {
+  data(){
+    return{
+      posts: [],
+      status:0,
+      preloader: true
+    }
+  }, 
+  components:{
+    Preloader
+  },
+  mounted() {
+    this.preloader=true
+    setTimeout(()=>{
+      this.preloader=false
+    }, 3000)
+        // this.$axios.$get("category")
+        // .then(response =>{
+        //   this.posts=response
+        //   // console.log(response.status)
+        //   // this.status=response.status
+        //   this.preloader=false
+        //   });
+  },
+}
+</script>
+<style scoped>
+.preloader{
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
+  height: 100%;
+  background: beige;
+  position: fixed;
+  z-index: 99999;
+  text-align: center;
+  display: table-cell;
+}
+.preloader>center{
+  vertical-align: middle;
+  height: 100vh;
+}
+.preloader>center>div{
+  width: 200px;
+  top: 50%;
+  position: relative;
+  background-color: black;
+  color: aliceblue;
+}
+
+
+</style>
