@@ -17,6 +17,7 @@ export default {
   modules:['@nuxtjs/axios'],
   axios:{    
     baseURL: 'http://localhost:8000/api/v1/',
+    // baseURL: 'https://jsonplaceholder.typicode.com/',
     credentials : false,
     proxy: false,
     proxyHeaders: false,
@@ -33,7 +34,8 @@ export default {
   },
   plugins: ['~/plugins/vuetify.js'],
   css: [
-    '~/assets/style/app.styl'
+    '~/assets/style/app.styl',
+    '~/assets/style/main.css',
   ],
   /*
   ** Customize the progress bar color

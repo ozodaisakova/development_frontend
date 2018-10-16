@@ -1,5 +1,5 @@
 <template>
-    <v-breadcrumbs divider="/">
+    <v-breadcrumbs divider="/" large>
       <v-breadcrumbs-item :to="`/`">Главная</v-breadcrumbs-item>
       <v-breadcrumbs-item >{{title}}</v-breadcrumbs-item>
     </v-breadcrumbs>

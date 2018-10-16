@@ -18,11 +18,15 @@ import {
   VTooltip,
   VImg,
   VProgressCircular,
-  VBreadCrumbs
+  VBreadCrumbs,
+  VPagination,
+  VSelect
 } from 'vuetify'
 
 Vue.use(Vuetify, {
   components: {
+    VSelect,
+    VPagination,
     VBreadCrumbs,
     VProgressCircular,
     VImg,

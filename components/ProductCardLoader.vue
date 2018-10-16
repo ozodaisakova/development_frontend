@@ -1,4 +1,11 @@
 <template>
+<div>
+    <v-layout row wrap> 
+        <v-flex d-flex xs12 sm8 md8>
+            <div class="product-breadcrumb animated-background">
+            </div>
+        </v-flex>
+    </v-layout>
     <v-layout row wrap>
         <v-flex d-flex xs12 sm4 md3 v-for="item in 12" :key="item">
             <v-card class="mx-1 my-1">
@@ -9,8 +16,7 @@
                         <div class="product-title animated-background">
                         </div>
                          <div class="product-info-2 animated-background">
-                        </div>
-                                               
+                        </div>                                               
                         <div class="product-info-1 animated-background">
                         </div>
                         <div class="product-info-3 animated-background">
@@ -22,6 +28,7 @@
             </v-card>
         </v-flex>
     </v-layout>
+</div>
 </template>
 <style scoped>
 @keyframes placeHolderShimmer {
@@ -73,6 +80,12 @@
     height: 10px; 
     margin: 5% 10% 5% 5%;  
     border-radius: 10px; 
+}
+.product-breadcrumb{
+    margin: 10px;
+    height: 20px;
+    margin: 7% 10% 5% 1%;
+    border-radius: 10px;
 }
 
 </style>

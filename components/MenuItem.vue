@@ -1,7 +1,7 @@
 <template>
     <v-list-tile
         router
-        :to="{path: '/category/'+item.slug }"
+        :to="{path: '/category/'+item.id }"
         exact>
         <v-list-tile-action>
           <v-icon v-html="item.icon"></v-icon>

@@ -5,8 +5,7 @@
       :clipped="clipped"
       v-model="drawer"
       fixed
-      app
-      >
+      app>
       <v-list>
       <v-toolbar flat class="hidden-sm-and-up">
       <v-list>
@@ -39,8 +38,7 @@
         <v-divider></v-divider>
         <div
         v-if="item.children!=''">
-        <div  
-        >
+        <div>
         <menu-item 
           v-for="i in item.children" 
           :key="i.id"
@@ -71,8 +69,7 @@
             label="Поиск"
             append-icon="mdi-magnify"
             light
-            style="width:50%; display:inline-block"
-          >
+            style="width:50%; display:inline-block">
           </v-text-field>
         </v-flex>
       </v-layout> 
