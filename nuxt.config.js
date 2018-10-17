@@ -32,7 +32,9 @@ export default {
     }   
 
   },
-  plugins: ['~/plugins/vuetify.js'],
+  plugins: [
+    '~/plugins/vuetify.js'
+  ],
   css: [
     '~/assets/style/app.styl',
     '~/assets/style/main.css',

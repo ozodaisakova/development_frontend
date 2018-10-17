@@ -8,8 +8,7 @@
     </center>
   </div>
   <p v-else>    
-    {{posts}} 
-    <v-img :src="`~/assets/images/image_placeholder.png`"></v-img>
+    sdvlksdvjlk
     </p>
 </div>
 </template>

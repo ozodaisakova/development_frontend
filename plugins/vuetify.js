@@ -20,11 +20,13 @@ import {
   VProgressCircular,
   VBreadCrumbs,
   VPagination,
-  VSelect
+  VSelect,
+  VCarousel
 } from 'vuetify'
 
 Vue.use(Vuetify, {
   components: {
+    VCarousel,
     VSelect,
     VPagination,
     VBreadCrumbs,

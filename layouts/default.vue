@@ -8,7 +8,7 @@
       app>
       <v-list>
       <v-toolbar flat class="hidden-sm-and-up">
-      <v-list>
+      <v-list >
         <v-list-tile class="" >
           <v-list-tile-title class="title">
             TAK-MEBEL
@@ -22,7 +22,9 @@
         router
         to="/"
         key="1"
-        exact>
+        exact
+        
+        ripple>
           <v-list-tile-action>
             <v-icon>mdi-home</v-icon>
           </v-list-tile-action>
@@ -54,12 +56,17 @@
       </v-list>
     </v-navigation-drawer>
     <v-toolbar fixed app :clipped-left="clipped" color="primary" dark class="toolbar-back">
-      <v-btn @click="drawer = !drawer" icon><v-icon>mdi-menu</v-icon></v-btn>
+        <v-btn @click="drawer = !drawer" icon>
+          <v-icon>mdi-menu</v-icon>
+          </v-btn>
+      
       <v-btn
         class="hidden-sm-and-down"
         icon
         @click.stop="miniVariant = !miniVariant">
-        <v-icon v-html="miniVariant ? 'mdi-format-horizontal-align-right' : 'mdi-format-horizontal-align-left'"></v-icon>
+          <v-icon v-html="miniVariant ? 'mdi-format-horizontal-align-right' : 'mdi-format-horizontal-align-left'">
+          </v-icon>
+        
       </v-btn>
       <v-toolbar-title v-text="title" class="hidden-sm-and-down"></v-toolbar-title> 
       <v-layout row wrap align-center>
@@ -94,7 +101,7 @@
       
     </v-toolbar>
     <v-content>
-      <v-container>
+      <v-container class="main-back">
         <nuxt />
       </v-container>
     </v-content>

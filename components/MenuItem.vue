@@ -2,7 +2,8 @@
     <v-list-tile
         router
         :to="{path: '/category/'+item.id }"
-        exact>
+        exact
+        ripple>
         <v-list-tile-action>
           <v-icon v-html="item.icon"></v-icon>
         </v-list-tile-action>
