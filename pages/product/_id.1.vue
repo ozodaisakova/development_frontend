@@ -41,33 +41,70 @@
             <v-flex class="pa-3 v-card theme--light mx-2">
                 <h1 class="headline font-weight-bold  mb-2">{{product.name}}</h1>
                 <h1 class="headline font-weight-bold grey--text darken-2 mb-3">{{product.price}} тг</h1>
-                <v-divider class="mb-4 "></v-divider>  
+                <v-divider class="md-4"></v-divider>  
+                            
+                <v-flex xs12 md12 sm12  class="text-xs-center my-4">
+                    Выберите количество товара
+                </v-flex>                
                 <v-layout row wrap>
-                    <v-flex class="text-xs-justify">
-                        {{short_description}}
-                        <v-divider class="mt-4"></v-divider> 
+                    <v-flex  xs4 sm4 md4 class="text-xs-right">
+                        <v-btn 
+                            fab
+                            icon
+                            small
+                            @click="minusItem(item)"
+                            color="secondary">
+                            <v-icon>mdi-minus</v-icon>
+                        </v-btn>
                     </v-flex>
-                    <v-divider class="mt-4"></v-divider>  
-                    <v-flex xs12 sm6 md6 class="px-2 mt-4">
+                    <v-flex  xs4 sm4 md4 class="text-xs-center" fill-height align-center>                        
+                        <v-btn
+                            readonly
+                            color="secondary"
+                            outline>
+                            {{item}}
+                        </v-btn>
+                    </v-flex>
+                    <v-flex  xs4 sm4 md4>
+                        <v-btn
+                            fab
+                            icon
+                            small
+                            color="secondary"
+                            @click="plusItem(item)">
+                            <v-icon>mdi-plus</v-icon>
+                        </v-btn>
+                    </v-flex>
+                    <v-flex xs12 md12 sm12 class="mt-5">
+                        <v-select
+                            label="Выберите цвет товара"
+                            :items="colors"
+                            item-text="color"
+                            item-value="color"
+                            class="mx-5">
+                        </v-select>
+                    </v-flex>  
+                    
+                    <v-flex xs12 sm6 md6 class="pa-1 mt-4">
                         <v-btn
                             color="warning"
                             block
-                            outline
-                            @click="toCart()">
+                            outline>
                             В корзину
                         <v-icon  right>mdi-cart</v-icon>
                         </v-btn>
                     </v-flex>
-                    <v-flex xs12 sm6 md6 class=" px-2 mt-4">
+                    <v-flex xs12 sm6 md6 class="pa-1 mt-4">
                         <v-btn
                             block
-                            color="error"
-                            :to="`/buy/`+product.id">
+                            color="error">
                             Купить сейчас
                         </v-btn>
                     </v-flex>
+                    
                 </v-layout>
                 <div class="mt-3"></div>
+                <v-divider></v-divider>
             </v-flex>
         </v-flex> 
         <v-flex xs12 sm12 md12 class="mt-4">
@@ -78,9 +115,15 @@
                 color="tabscolor"
                 fixed-tabs
                 dark>
-            <v-tab ripple>Описание</v-tab>
-            <v-tab ripple>Характеристики</v-tab>            
-            <v-tab ripple>Отзывы</v-tab>
+            <v-tab ripple>
+                Описание
+            </v-tab>
+            <v-tab ripple>
+                Характеристики
+            </v-tab>            
+            <v-tab ripple>
+                Отзывы
+            </v-tab>
             <v-tab-item>
                 <v-card flat>
                 <v-card-text>
@@ -111,27 +154,19 @@
             </v-tab-item>
             <v-tab-item>
                 <v-card flat>
-                <v-card-text>   
-                    {{product}}
+                <v-card-text>
+                  
+                  Сайт находиться в режиме разработки
                 </v-card-text>
                 </v-card>
             </v-tab-item>
             </v-tabs>
         </v-card>
         </v-flex>
-    </v-layout> 
-    </v-layout>  
-    <v-snackbar
-        top
-        v-model="snackbar"
-        class="text-xs-center">
-            Товар успешно добавлен в корзину!
-        <v-btn
-            color="pink"
-            flat
-            small
-            @click="snackbar = false">Закрыть</v-btn>
-</v-snackbar>     
+    </v-layout>   
+
+    </v-layout>
+        
 </v-layout>    
 </template>
 <script>
@@ -140,7 +175,6 @@ import PageNotFound from '~/components/errors/PageNotFound.vue'
 export default{
     data(){
         return{
-            snackbar: false,
             item: 1,
             product:[],
             images:[],
@@ -148,8 +182,7 @@ export default{
             recommendation:[], 
             preloader: false,
             error: false,
-            for_breadcrumd: [{src: "/", name:"Главная"}],
-            short_description: ''
+            for_breadcrumd: [{src: "/", name:"Главная"}]
         }    
     },
     components:{
@@ -166,17 +199,6 @@ export default{
                         this.for_breadcrumd.push({"src":"/catalog/"+values[0][0].catalog.id, "name": values[0][0].catalog.name})
                         this.for_breadcrumd.push({"src":"/product/"+values[0][0].id, "name": values[0][0].name})
                         if(values[0][0].colors!=null) this.colors=JSON.parse(values[0][0].colors)
-                        if(values[0][0].description&&values[0][0].description.length>250)
-                            this.short_description=values[0][0].description.substr(0, 250)+'...'
-                        else if(values[0][0].description)
-                                this.short_description=values[0][0].description+"Вся мебель фабрики «ИП Кудайбергенов» имеет сертификат соответствия"+
-                                " установленным ГОСТам республики Казахстан и является синонимом по настоящему качественной мебели."
-                            else
-                                this.short_description="Вся мебель фабрики «ИП Кудайбергенов» "+
-                                "имеет сертификат соответствия установленным ГОСТам республики Казахстан и" +
-                                "является синонимом по настоящему качественной мебели. А также  фабрика существует на рынке мебели более 10 лет "+
-                                "и является одним из лидеров среди производителей стульев, столов шпоновых, столов разного вида и корпусной мебели в Казахстане. "
-                        
                         this.preloader=false
                     })
                     .catch(error=>{
@@ -202,51 +224,24 @@ export default{
             const response = await this.$axios.$get("catalog/"+id);
             return response;
         },
-        toCart(){
-            if(process.browser){
-                //сохранение количество товаров
-                if(!localStorage.cart_product_count) localStorage.cart_product_count=0;   
-                var count=  parseInt(localStorage.cart_product_count)  +1;   
-                localStorage.cart_product_count=count.toString();
-                this.snackbar=true;
-                this.$store.dispatch('increment_cart', 1);
-                // сохранение самого продукта в localstorage и в корзину
-                if(!localStorage.cart_product_list) 
-                    localStorage.setItem('cart_product_list', '[]');
-                var pr=localStorage.getItem('cart_product_list');               
-                this.products=JSON.parse(pr);    
-                this.new_product_json='{ "user_id":"Not registered", "product_id":"'+this.product.id+'"}';
-                this.products.push(this.new_product_json);
-                localStorage.removeItem('cart_product_list')
-                localStorage.setItem('cart_product_list', JSON.stringify(this.products));
-            }
-        },
     }
 }
 </script>
 <style scoped>
-@media screen and (max-width: 1600px){
-    .product-carousel{
-        height: 400px;
-    }    
-}
 @media screen and (max-width:1024px){
     .product-carousel{
-        height: 400px;
+        height: 300px;
     }
 }
 @media screen and (max-width:768px){
     .product-carousel{
-        height: 420px;
+        height: 250px;
     }
 }
 @media screen and (max-width:520px){
     .product-carousel{
-        height: 350px;
+        height: 230px;
     }
 }
-.product-carousel{
-    box-shadow: none;
-    border: none;
-}
+
 </style>

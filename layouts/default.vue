@@ -21,9 +21,7 @@
         <v-list-tile 
         router
         to="/"
-        key="1"
-        exact
-        
+        exact        
         ripple>
           <v-list-tile-action>
             <v-icon>mdi-home</v-icon>
@@ -33,33 +31,41 @@
           </v-list-tile-content>
         </v-list-tile>
         <!-- ///////////////////////////////////////// -->
-        <div
-        v-for="(item) in menu_items.categories"
-        :key=item.slug>
-        <v-subheader>{{item.title}}</v-subheader>
-        <v-divider></v-divider>
-        <div
-        v-if="item.children!=''">
-        <div>
-        <menu-item 
-          v-for="i in item.children" 
-          :key="i.id"
-          v-bind:item="i"></menu-item>
-        
-        </div>
-        </div>
-        <div
-        v-else>       
-        </div> 
-        </div>
+        <v-subheader>Каталог</v-subheader>
+        <v-divider></v-divider>        
+          <menu-item
+            v-for="(catalog, i) in menu_items.catalogs"
+            v-if="catalog.hidden==0"
+            :key="`catalog-`+i"
+            v-bind:name="catalog.name" 
+            v-bind:icon="catalog.icon" 
+            v-bind:tuda="`/catalog/`+catalog.id">
+          </menu-item>
+          <span v-if="error_catalog!=''" class="red--text lighten-3">
+            Қатенің атауы: {{error_catalog.message}}<br>
+            <h3>Бұл қате осы сайтқа арналған backend-пен байланыс жоғалғандығын білдіреді</h3>
+            Бұл қатені туралау үшін 
+            <b>development_backend </b> папкасына барып <b>php artisan serv</b> командасын орындау қажет.
+            <br>
+            Егер бұл команда көмектеспесе  Google Chrome браузерінде 
+            <a href="https://chrome.google.com/webstore/detail/allow-cors-access-control/lhobafahddgcelffkeicbaginigeejlf/related?utm_source=chrome-ntp-icon">
+            ссылкасы </a>бойынша расширениянені орнату қажет
+            </span>
         <!-- ///////////////////////////////// -->
+        <v-subheader>Информация</v-subheader>
+        <v-divider></v-divider>
+        <span v-if="error_information!=''" class="red--text lighten-3"> Қатенің атауы: {{error_information.message}}</span>
+        <div 
+          v-for="(item, i) in information_items.informations" 
+          :key="`information-`+i">
+          <menu-item v-if="item.hidden==0" v-bind:name="item.name" v-bind:icon="item.icon" v-bind:tuda="`/information/`+item.id"></menu-item>
+        </div>
       </v-list>
     </v-navigation-drawer>
     <v-toolbar fixed app :clipped-left="clipped" color="primary" dark class="toolbar-back">
         <v-btn @click="drawer = !drawer" icon>
           <v-icon>mdi-menu</v-icon>
-          </v-btn>
-      
+          </v-btn>      
       <v-btn
         class="hidden-sm-and-down"
         icon
@@ -85,7 +91,11 @@
       <v-btn
         slot="activator"
         icon>
-      <v-icon>mdi-cart</v-icon>
+        <v-badge color="error" v-if="cart!=0">
+          <span slot="badge" >{{cart}}</span>
+          <v-icon>mdi-cart</v-icon>
+        </v-badge>
+        <v-icon v-else>mdi-cart</v-icon>
       </v-btn>
       <span>Корзина</span>
     </v-tooltip>
@@ -109,7 +119,9 @@
 </template>
 
 <script>
-import MenuItem from '~/components/MenuItem.vue'
+import MenuItem from '~/components/menu/MenuItem.vue'
+import {mapState, mapGetters} from "vuex"
+
   export default {
     data () {
       return {
@@ -118,26 +130,51 @@ import MenuItem from '~/components/MenuItem.vue'
         drawer: true,
         fixed: false,
         menu_items: [],
+        information_items:[],
         preloader:false,
         miniVariant: false,
         right: true,
         rightDrawer: false,
-        title: 'TAK - MEBEL'
+        title: 'TAK - MEBEL',
+        error_catalog:'',
+        error_information: '',
+        cart_count: 0
       }
     },
     components:{
       MenuItem
     },
     mounted(){
+      if(process.browser){
+        if(!localStorage.cart_product_count) localStorage.setItem('cart_product_count', '0');
+        this.$store.dispatch('increment_cart', parseInt(localStorage.getItem('cart_product_count')));
+      }     
       this.preloader=true
-      this.$axios.$get("category")
+      this.$axios.$get("catalog")
           .then(response=>{
             this.menu_items=response
-            this.preloader=false
-            console.log(this.menu_items)
+          })
+          .catch(error=>{
+            this.error_catalog=error
           });
-
+      this.$axios.$get("information")
+          .then(response=>{
+            this.information_items=response
+            this.preloader=false            
+          })
+          .catch(error=>{
+            this.error_information=error
+          });
     },
+    
+    computed:{
+      cart(){
+        if(process.browser){          
+          return this.$store.getters.cart_count
+        }
+      }
+    }   
+   
   }
 </script>
 <style scoped>

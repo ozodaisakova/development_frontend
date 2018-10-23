@@ -21,11 +21,25 @@ import {
   VBreadCrumbs,
   VPagination,
   VSelect,
-  VCarousel
+  VCarousel,
+  VTabs,
+  VSnackbar,
+  VBadge, 
+  VStepper, 
+  VTextarea,
+  VForm,
+  VDialog
 } from 'vuetify'
 
 Vue.use(Vuetify, {
   components: {
+    VDialog,
+    VForm,
+    VTextarea,
+    VStepper,
+    VBadge,
+    VSnackbar,
+    VTabs,
     VCarousel,
     VSelect,
     VPagination,
@@ -54,7 +68,8 @@ Vue.use(Vuetify, {
       "error": "#FF5252",
       "info": "#2196F3",
       "success": "#13C56B",
-      "warning": "#FFC107"
+      "warning": "#FFC107",
+      "tabscolor": "#7F7F7F"
     }
   
 })

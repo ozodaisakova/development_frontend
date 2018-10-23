@@ -8,12 +8,12 @@
     </center>
   </div>
   <p v-else>    
-    sdvlksdvjlk
-    </p>
+    Main page
+  </p>
 </div>
 </template>
 <script>
-import Preloader from '~/components/Preloader.vue'
+import Preloader from '~/components/loaders/Preloader.vue'
 export default {
   data(){
     return{

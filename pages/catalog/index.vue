@@ -1,6 +1,6 @@
 <template>
     <div>
-        <page-not-found></page-not-found>             
+        <page-not-found></page-not-found>  
     </div>
 </template>
 <script>

@@ -1,21 +1,11 @@
 <template>
     <v-breadcrumbs divider="/" large>
-      <v-breadcrumbs-item :to="`/`">Главная</v-breadcrumbs-item>
-      <v-breadcrumbs-item >{{title}}</v-breadcrumbs-item>
+      <v-breadcrumbs-item :key="item.src" v-for="item in data" :to="item.src">{{ item.name}}</v-breadcrumbs-item>
     </v-breadcrumbs>
 </template>
 <script>
 export default {
-  props:['title', 'slug','product_name'],
-  data(){
-    return{
-      to_category:"",
-      to_product:""
-    }
-  },
-  created() {
-    this.to_category="/category/"+this.slug
-  },
+  props:['data']
 }
 </script>
 

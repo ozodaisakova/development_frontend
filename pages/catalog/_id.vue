@@ -5,25 +5,15 @@
     </div>
     <div v-else>
         <div v-if="error==true">
-                <v-layout row wrap>
-                    <v-flex xs12 sm3 md3>
-                    </v-flex>
-                    <v-flex xs12 sm6 md6>
-                        <page-not-found></page-not-found>
-                    </v-flex>
-                    <v-flex xs12 sm3 md3>
-                    </v-flex>
-                </v-layout>               
-            </div>
+            <page-not-found></page-not-found>
+        </div>
         <v-container fluid grid-list-md class="container_products" v-else>
             <div  v-if="products.data!=''">            
             <v-layout row wrap >
-                <v-flex d-flex xs12 sm8 md8>
+                <v-flex d-flex xs12 sm12 md8>
                     <store-bread-crumbs 
                         class="hidden-sm-and-down"
-                        v-bind:title="category.title" 
-                        v-bind:slug="``" 
-                        v:bind:product_name="">                        
+                        v-bind:data="for_breadcrumd">                        
                     </store-bread-crumbs>                    
                 </v-flex>
                 <v-flex d-flex xs12 sm4 md4>
@@ -61,32 +51,31 @@
                 <span class="title">Извините, но в данном разделе временно отсутсвует товары</span>
             </div>
         </v-container>
-        <!-- <h1> {{total_page}} </h1>
-        <h2>{{category}}</h2>
-        <h4> {{products}} </h4> -->
     </div>    
 </div>
 </template>
 <script>
 import ProductCard from '~/components/ProductCard.vue'
-import ProductCardLoader from '~/components/ProductCardLoader.vue'
+import ProductCardLoader from '~/components/loaders/ProductCardLoader.vue'
 import StoreBreadCrumbs from '~/components/StoreBreadCrumbs.vue'
-import PageNotFound from '~/components/PageNotFound.vue'
+import PageNotFound from '~/components/errors/PageNotFound.vue'
 export default {
     data(){
         return{
             slug: '',
             error: false,
             productloader: false,
-            category_id:0,
-            category:[],
+            catalog_id:0,
+            catalog:[],
             products:[],
-            for_breadcrumd:[],
+            for_breadcrumd:[
+                { src: "/", name: "Главная" }
+            ],
             scrollToTop: true,
             page: 1,
             select: {"report":"Наименование А -> Я", "order":{"column":"name", "sort":"asc"}},
             order_items:[
-                {"report":"По новизне", "order":{"column":"updated_at", "sort":"asc"}},
+                {"report":"По новизне", "order":{"column":"updated_at", "sort":"desc"}},
                 {"report":"Наименование А -> Я", "order":{"column":"name", "sort":"asc"}}, 
                 {"report":"Наименование Я -> А", "order":{"column":"name", "sort":"desc"}},
                 {"report":"Сначала дешевые", "order":{"column":"price", "sort":"asc"}},
@@ -104,14 +93,15 @@ export default {
     },
     mounted() {
         this.productloader=true;
-        this.category_id=this.$route.params.id;
-        Promise.all([this.getCategory(this.category_id), this.getProducts(this.category_id)])
+        this.catalog_id=this.$route.params.id;
+        Promise.all([this.getcatalog(this.catalog_id), this.getProducts(this.catalog_id)])
                     .then(values=>{
-                        this.category=values[0];
+                        this.catalog=values[0];
                         this.products=values[1];
                         this.total_page=values[1].last_page
                         this.current_page=values[1].current_page
                         this.productloader=false;
+                        this.for_breadcrumd.push({"src":"/catalog/"+values[0].id, "name": values[0].name})
                         })  
                     .catch(error=>{
                         this.productloader=false;
@@ -119,22 +109,22 @@ export default {
                         })      
     },
     methods:{
-        async getCategory(id){
-            const response = await this.$axios.$get("category/"+id);
+        async getcatalog(id){
+            const response = await this.$axios.$get("catalog/"+id);
             return response;
         },
         async getProducts(id, page, column, order){
             if(!page) page=1; 
             if(!column) column="id";
             if(!order) order="asc";
-            const response = await this.$axios.$get("products_of_category?category_id="+
+            const response = await this.$axios.$get("products-of-catalog?catalog_id="+
                                                     id+"&page="+page+"&column="+column+"&order="+order);
             return response
         },
         goPage(page){
             window.scroll(0,0,'smooth')
             this.productloader=true
-            Promise.all([this.getProducts(this.category_id, page, this.select.order.column, this.select.order.sort)])
+            Promise.all([this.getProducts(this.catalog_id, page, this.select.order.column, this.select.order.sort)])
                         .then(values=>{
                             this.products=values[0]
                             this.current_page=values[0].current_page
@@ -149,7 +139,7 @@ export default {
         doSorting(sort, column){
             window.scroll(0,0,'smooth')
             this.productloader=true
-            Promise.all([this.getProducts(this.category_id, this.current_page, column, sort)])
+            Promise.all([this.getProducts(this.catalog_id, this.current_page, column, sort)])
                         .then(values=>{
                             this.products=values[0]
                             this.current_page=values[0].current_page
