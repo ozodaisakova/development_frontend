@@ -12,7 +12,7 @@
         </v-flex>
     </v-layout>
     <v-layout  v-else>
-            <page-not-found v-if="error==true"></page-not-found>
+            <any-error v-if="error==true" v-bind:error_code="error_code" v-bind:error_name="error_name"></any-error>
         <v-layout row wrap v-else>
              <v-flex d-flex xs12 sm12 md8>
                     <store-bread-crumbs 
@@ -136,7 +136,7 @@
 </template>
 <script>
 import StoreBreadCrumbs from '~/components/StoreBreadCrumbs.vue'
-import PageNotFound from '~/components/errors/PageNotFound.vue'
+import AnyError from '~/components/errors/AnyError.vue'
 export default{
     data(){
         return{
@@ -148,38 +148,44 @@ export default{
             recommendation:[], 
             preloader: false,
             error: false,
+            error_code: "---",
+            error_name: 'НЕИВЕСТНАЯ ОШИБКА',
             for_breadcrumd: [{src: "/", name:"Главная"}],
             short_description: ''
         }    
     },
     components:{
         StoreBreadCrumbs,
-        PageNotFound
+        AnyError
     },
     mounted() {
-        this.preloader=true
-        var id=this.$route.params.id
+        this.preloader=true;
+        var id=this.$route.params.id;
         Promise.all([this.getProduct(id)])
                     .then(values=>{
                         this.product=values[0][0];
-                        this.images=JSON.parse(values[0][0].images)
-                        this.for_breadcrumd.push({"src":"/catalog/"+values[0][0].catalog.id, "name": values[0][0].catalog.name})
-                        this.for_breadcrumd.push({"src":"/product/"+values[0][0].id, "name": values[0][0].name})
-                        if(values[0][0].colors!=null) this.colors=JSON.parse(values[0][0].colors)
+                        this.images=JSON.parse(values[0][0].images);
+                        this.for_breadcrumd.push({"src":"/catalog/"+values[0][0].catalog.id, "name": values[0][0].catalog.name});
+                        this.for_breadcrumd.push({"src":"/product/"+values[0][0].id, "name": values[0][0].name});
+                        if(values[0][0].colors!=null) this.colors=JSON.parse(values[0][0].colors);
                         if(values[0][0].description&&values[0][0].description.length>250)
-                            this.short_description=values[0][0].description.substr(0, 250)+'...'
+                            this.short_description=values[0][0].description.substr(0, 250)+'...';
                         else if(values[0][0].description)
                                 this.short_description=values[0][0].description+"Вся мебель фабрики «ИП Кудайбергенов» имеет сертификат соответствия"+
-                                " установленным ГОСТам республики Казахстан и является синонимом по настоящему качественной мебели."
+                                " установленным ГОСТам республики Казахстан и является синонимом по настоящему качественной мебели.";
                             else
                                 this.short_description="Вся мебель фабрики «ИП Кудайбергенов» "+
                                 "имеет сертификат соответствия установленным ГОСТам республики Казахстан и" +
                                 "является синонимом по настоящему качественной мебели. А также  фабрика существует на рынке мебели более 10 лет "+
-                                "и является одним из лидеров среди производителей стульев, столов шпоновых, столов разного вида и корпусной мебели в Казахстане. "
-                        
-                        this.preloader=false
+                                "и является одним из лидеров среди производителей стульев, столов шпоновых, столов разного вида и корпусной мебели в Казахстане. ";
+                        this.preloader=false;
                     })
                     .catch(error=>{
+                        console.log(error);
+                        if(error.response.status==404){
+                            this.error_code = "404";
+                            this.error_name = "СТРАНИЦА НЕ НАЙДЕНА!";
+                        }                      
                         this.error=true
                         this.preloader=false
                     });

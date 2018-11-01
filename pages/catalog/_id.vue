@@ -5,7 +5,7 @@
     </div>
     <div v-else>
         <div v-if="error==true">
-            <page-not-found></page-not-found>
+            <any-error v-bind:error_code="error_code" v-bind:error_name="error_name"></any-error>
         </div>
         <v-container fluid grid-list-md class="container_products" v-else>
             <div  v-if="products.data!=''">            
@@ -58,7 +58,7 @@
 import ProductCard from '~/components/ProductCard.vue'
 import ProductCardLoader from '~/components/loaders/ProductCardLoader.vue'
 import StoreBreadCrumbs from '~/components/StoreBreadCrumbs.vue'
-import PageNotFound from '~/components/errors/PageNotFound.vue'
+import AnyError from '~/components/errors/AnyError.vue'
 export default {
     data(){
         return{
@@ -82,14 +82,16 @@ export default {
                 {"report":"Сначала дорогие", "order":{"column":"price", "sort":"desc"}},
                 ],
             total_page: 1,
-            current_page: 1
+            current_page: 1,
+            error_code: '',
+            error_name: ''
         }
     },
     components:{
         ProductCard,
         ProductCardLoader,
         StoreBreadCrumbs,
-        PageNotFound
+        AnyError
     },
     mounted() {
         this.productloader=true;
@@ -98,15 +100,25 @@ export default {
                     .then(values=>{
                         this.catalog=values[0];
                         this.products=values[1];
-                        this.total_page=values[1].last_page
-                        this.current_page=values[1].current_page
+                        this.total_page=values[1].last_page;
+                        this.current_page=values[1].current_page;
                         this.productloader=false;
-                        this.for_breadcrumd.push({"src":"/catalog/"+values[0].id, "name": values[0].name})
+                        this.for_breadcrumd.push({"src":"/catalog/"+values[0].id, "name": values[0].name});
                         })  
-                    .catch(error=>{
+                    .catch(e=>{
+                        if(e.response.status==400){
+                        this.error_code='400';
+                        this.error_name="ОШИБКА ЗАПРОСА!";
+                        }else if(e.response.status==404){
+                        this.error_code="404";
+                        this.error_name="СТРАНИЦА НЕ НАЙДЕНО!";
+                        }else{
+                        this.error_code="---";
+                        this.error_name="НЕИВЕСТНАЯ ОШИБКА!";
+                        }
                         this.productloader=false;
                         this.error=true;
-                        })      
+                        }) ;    
     },
     methods:{
         async getcatalog(id){
@@ -122,19 +134,18 @@ export default {
             return response
         },
         goPage(page){
-            window.scroll(0,0,'smooth')
-            this.productloader=true
+            window.scroll(0,0,'smooth');
+            this.productloader=true;
             Promise.all([this.getProducts(this.catalog_id, page, this.select.order.column, this.select.order.sort)])
                         .then(values=>{
-                            this.products=values[0]
-                            this.current_page=values[0].current_page
-                            this.productloader=false                            
+                            this.products=values[0];
+                            this.current_page=values[0].current_page;
+                            this.productloader=false;   
                         })
                         .catch(error=>{
                             this.productloader=false;
                             this.error=true;
-                        }) 
-            console.log("Page="+page);
+                        }) ;
         },
         doSorting(sort, column){
             window.scroll(0,0,'smooth')

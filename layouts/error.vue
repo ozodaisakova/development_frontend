@@ -1,11 +1,14 @@
 <template>
-<page-not-found></page-not-found>
+<div>
+<any-error v-bind:error_code="error.statusCode" v-bind:error_name="error.message"></any-error>
+</div>
 </template>
 <script>
-import PageNotFound from '~/components/errors/PageNotFound.vue'
+import AnyError from '~/components/errors/AnyError.vue'
 export default {
+    props: ['error'],
     components:{
-        PageNotFound
+        AnyError
     }    
 }
 </script>

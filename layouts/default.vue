@@ -1,21 +1,29 @@
 <template>
-  <v-app>
-    <v-navigation-drawer
+<div>
+  <div v-if="preloader == true" class="preloader">
+    <center>
+      <div>
+        <Preloader></Preloader>
+      </div>
+    </center>
+  </div>
+ <v-app   v-else>
+    <v-navigation-drawer     
       :mini-variant.sync="miniVariant"
       :clipped="clipped"
       v-model="drawer"
       fixed
       app>
       <v-list>
-      <v-toolbar flat class="hidden-sm-and-up">
+      <v-toolbar flat class="hidden-sm-and-up ">
       <v-list >
-        <v-list-tile class="" >
+        <v-list-tile>
           <v-list-tile-title class="title">
-            TAK-MEBEL
+            TAK MEBEL
           </v-list-tile-title>
         </v-list-tile>
       </v-list>
-      </v-toolbar>
+    </v-toolbar>
       <v-subheader>Навигация сайта</v-subheader>
         <v-divider></v-divider>
         <v-list-tile 
@@ -90,7 +98,8 @@
       <v-tooltip bottom>
       <v-btn
         slot="activator"
-        icon>
+        icon
+        :to="`/cart`">
         <v-badge color="error" v-if="cart!=0">
           <span slot="badge" >{{cart}}</span>
           <v-icon>mdi-cart</v-icon>
@@ -116,11 +125,15 @@
       </v-container>
     </v-content>
   </v-app>
+</div>
+ 
 </template>
 
 <script>
 import MenuItem from '~/components/menu/MenuItem.vue'
+import Preloader from '~/components/loaders/Preloader.vue'
 import {mapState, mapGetters} from "vuex"
+
 
   export default {
     data () {
@@ -131,7 +144,7 @@ import {mapState, mapGetters} from "vuex"
         fixed: false,
         menu_items: [],
         information_items:[],
-        preloader:false,
+        preloader:true,
         miniVariant: false,
         right: true,
         rightDrawer: false,
@@ -142,38 +155,47 @@ import {mapState, mapGetters} from "vuex"
       }
     },
     components:{
-      MenuItem
+      MenuItem,
+      Preloader
     },
     mounted(){
       if(process.browser){
         if(!localStorage.cart_product_count) localStorage.setItem('cart_product_count', '0');
         this.$store.dispatch('increment_cart', parseInt(localStorage.getItem('cart_product_count')));
       }     
-      this.preloader=true
-      this.$axios.$get("catalog")
-          .then(response=>{
-            this.menu_items=response
-          })
-          .catch(error=>{
-            this.error_catalog=error
-          });
-      this.$axios.$get("information")
-          .then(response=>{
-            this.information_items=response
-            this.preloader=false            
-          })
-          .catch(error=>{
-            this.error_information=error
-          });
+      // this.preloader=true
+      Promise.all([this.getCatalog(),  this.getInformation()])
+                  .then(values=>{
+                    this.menu_items = values[0];
+                    this.information_items = values[1];
+                    this.preloader = false;
+                  })
+                  .catch(error=>{
+                    console.log("My error:"+error);
+                    if(typeof error.response==='undefined'){
+                      this.error_catalog = error;
+                      this.error_information = error;                      
+                    }                    
+                    this.preloader = false;
+                  });
     },
-    
     computed:{
       cart(){
         if(process.browser){          
-          return this.$store.getters.cart_count
+          return this.$store.getters.cart_count;
         }
       }
-    }   
+    },
+    methods:{
+      async getCatalog(){
+        const response = await this.$axios.$get("catalog");
+        return response;
+      },
+      async getInformation(){
+        const response = await this.$axios.$get("information");
+        return response;
+      }
+    }  
    
   }
 </script>
@@ -204,4 +226,51 @@ import {mapState, mapGetters} from "vuex"
     border-left: solid 1px #aaa;
     background-color: rgb(173, 172, 172);
 }
+@-moz-document url-prefix(http://),url-prefix(https://) {
+    scrollbar {
+       -moz-appearance: none !important;
+       background: rgb(0,255,0) !important;
+    }
+    thumb,scrollbarbutton {
+       -moz-appearance: none !important;
+       background-color: rgb(0,0,255) !important;
+    }
+
+    thumb:hover,scrollbarbutton:hover {
+       -moz-appearance: none !important;
+       background-color: rgb(255,0,0) !important;
+    }
+    scrollbarbutton {
+       display: none !important;
+    }
+    scrollbar[orient="vertical"] {
+      min-width: 15px !important;
+    }
+}
+.preloader{
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  z-index: 99999;
+  text-align: center;
+  display: table-cell;
+}
+.preloader>center{
+  vertical-align: middle;
+  height: 100vh;
+}
+.preloader>center>div{
+  width: 200px;
+  top: 50%;
+  position: relative;
+  background-color: black;
+  color: aliceblue;
+}
+
+
 </style>
+

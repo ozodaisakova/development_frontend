@@ -28,11 +28,13 @@ import {
   VStepper, 
   VTextarea,
   VForm,
-  VDialog
+  VDialog,
+  VAlert
 } from 'vuetify'
 
 Vue.use(Vuetify, {
   components: {
+    VAlert,
     VDialog,
     VForm,
     VTextarea,

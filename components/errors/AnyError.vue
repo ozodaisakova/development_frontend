@@ -10,9 +10,19 @@
                 .cls-3{font-size:115.24px;font-family:BebasNeueBold, BebasNeueBold;}
                 .cls-15,
                 .cls-3{fill:#fff;}
-                .cls-4{font-size:36px;fill:#d197ca;stroke:#fffaef;stroke-miterlimit:10;stroke-width:3px;font-family:RomanC, RomanC;letter-spacing:-0.05em;}.cls-5{fill:#3c2a34;}.cls-7{fill:#fbe4d3;}.cls-8{fill:#efcac4;}.cls-9{fill:#fffaef;}.cls-10{fill:#707173;}.cls-11{fill:#fab217;}.cls-12{fill:#f8e2d2;}.cls-13{fill:#ee3a3d;}.cls-14{fill:#fff9ef;}.cls-15{font-size:21px;font-family:ArialMT, Arial;}.cls-16{letter-spacing:0.02em;}</style></defs><title>Created by Ozoda Isakova</title><g id="BACKGROUND"><rect class="cls-1" width="500" height="500"/></g><g id="OBJECT"><ellipse class="cls-2" cx="243.52" cy="469.2" rx="156.84" ry="9.6"/>
-                <text class="cls-3" transform="translate(167.59 107.41)">404</text>
-                <text class="cls-4" transform="translate(4.76 174.9)">СТРАНИЦА НЕ НАЙДЕНА!</text>
+                .cls-4{
+                font-size:25px;
+                fill:#d197ca;
+                stroke:#fffaef;
+                stroke-miterlimit:10;
+                stroke-width:3px;
+                font-family:RomanC, RomanC;
+                letter-spacing:-0.05em;
+                text-align: center;
+                }
+                .cls-5{fill:#3c2a34;}.cls-7{fill:#fbe4d3;}.cls-8{fill:#efcac4;}.cls-9{fill:#fffaef;}.cls-10{fill:#707173;}.cls-11{fill:#fab217;}.cls-12{fill:#f8e2d2;}.cls-13{fill:#ee3a3d;}.cls-14{fill:#fff9ef;}.cls-15{font-size:21px;font-family:ArialMT, Arial;}.cls-16{letter-spacing:0.02em;}</style></defs><title>Created by Ozoda Isakova</title><g id="BACKGROUND"><rect class="cls-1" width="500" height="500"/></g><g id="OBJECT"><ellipse class="cls-2" cx="243.52" cy="469.2" rx="156.84" ry="9.6"/>
+                <text class="cls-3" text-anchor="middle" transform="translate(167.59 107.41)" x="80">{{error_code}}</text>
+                <text class="cls-4" text-anchor="middle" transform="translate(4.76 174.9)" x="250" y="0">{{error_name}}</text>
                 <path class="cls-5" d="M222.72,224.8,199,186.9s-18.52,4-17.61,41.47Z"/>
                 <path class="cls-6" d="M213.09,226.89l-15-29.18s-13.84,8.58-13.1,30.34Z"/>
                 <path class="cls-7" d="M205.67,222.3s-.93-11.49-11.49-13.61l4.06,7.6s-2.29-1.42-6.71-.8c0,0,5.13,4.06,5.48,8.44a7.07,7.07,0,0,0-2.3-7.62s4.25,1.22,5.13,2.81c0,0,0-4.78-2.83-7.6C197,211.52,202.67,214.17,205.67,222.3Z"/>
@@ -51,4 +61,8 @@
         </v-flex>
 </v-layout>   
 </template>
-
+<script>
+export default {
+    props: ['error_code', 'error_name']
+}
+</script>

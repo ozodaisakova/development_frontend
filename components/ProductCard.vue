@@ -3,7 +3,7 @@
     <v-card class="product-card my-1 mx-1"  >      
         <v-img
             :src="image"
-            lazy-src='data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAQMAAADCCAMAAAB6zFdcAAAAMFBMVEXx7/DIyMjS0tLh4ODn5ub08vPX1tbLy8vc29zFxsXk4+Ts6uvOzs7Y2Njq6Oni4eEhT4QPAAAB9ElEQVR4nO3bzXaCMBBA4fATZAzq+79tjaCG2KIkC09n7reUsph7iIKNzgEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAzDj3tc7fHqGWb6VW6789RCXfNrVooKXBoZyWBtL5Up2oaVB8Og3UNdi9DuJJuhp0u+8L5rN0Ndj5kUgD/Q3ipW67gbSXEI7DmwqqG8jxNpQPB7MNpH/MZLbB8BzpsrUcFDeQkBy0eh1kB002SCbyg9EG2UGLDaRPjqbvifknpeIGyUh+lHTkwU4DGZeZ/Hl1++yCmGnQyMn5+HXC+ilq8tm7g+oGjTRD140HyScOL6/obRAHzO8Q463T+kJQ3+DFFAddXQjmGixfObb5S6YazE8RYfVh6Ww1mOY5/WS3weM/EMldk7kG9wfqYLaBTPcxk8VgqcH1jil5jHouBjMNbgHSGYOxBi8BXLoYTDQ49f6X6R6LQX8DaX8L4JLFoL7B35vNHotBe4Ot/Xb3xaC8weaWw2CiwfauS38S/Q3ebTxdImhu8H7v7RxBZYPPtx9fI6jcjxSOi4/Oin8YnyV1NShDA1UNSqfQs1+5acdSt7NVNGiKf8PS6GlQRUGDvftTc///90xuHGqN3x6hXvFvWNI9/AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAI34A7YsmQqqJfVgAAAAASUVORK5CYII='
+            lazy-src='/image-placeholder.svg'
             aspect-ratio="1.3"
             class="grey lighten-2 "
             mb-2>
