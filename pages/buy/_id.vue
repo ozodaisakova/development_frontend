@@ -66,7 +66,7 @@
                             small
                             @click="minusItem(item)"
                             color="secondary">
-                            <v-icon>mdi-minus</v-icon>
+                            <v-icon>remove</v-icon>
                         </v-btn>
                     </v-flex>
                     <v-flex  xs4 sm4 md4 class="text-xs-center" fill-height align-center>                        
@@ -86,7 +86,7 @@
                             small
                             color="secondary"
                             @click="plusItem(item)">
-                            <v-icon>mdi-plus</v-icon>
+                            <v-icon>add</v-icon>
                         </v-btn>
                     </v-flex>                     
                 </v-layout>                  
@@ -106,28 +106,28 @@
            <v-flex xs12 sm3 md3 d-flex ></v-flex>
         <v-flex xs12 sm6 md6 class="pt-3">
           <v-card>
-             <div class="text-xs-center pt-5"><v-icon x-large >mdi-square-edit-outline</v-icon></div>
+             <div class="text-xs-center pt-5"><v-icon x-large >edit</v-icon></div>
         <v-form  v-model="valid" class="pa-3" lazy-validation ref="form">
             <v-text-field
             v-model="client_name"       
             :rules="nameRules"
             :counter="30"
             outline
-            append-icon="mdi-account"
+            append-icon="person"
             label="Введите имя"
             required></v-text-field>
             <v-text-field
             v-model="client_surname"       
             :rules="surnameRules"
             :counter="30"
-            append-icon="mdi-account"
+            append-icon="person"
             label="Введите фамилию"
             outline
             required></v-text-field>
           <v-text-field  
             v-model="client_email"    
             :rules="emailRules"
-            append-icon="mdi-email"
+            append-icon="email"
             label="Адрес вашей электронной почты"
             outline
             required></v-text-field>
@@ -179,7 +179,7 @@
            <v-flex xs12 sm3 md3 d-flex ></v-flex>
         <v-flex xs12 sm6 md6 class="pt-3">
           <v-card>
-            <div class="text-xs-center pt-5"><v-icon x-large >mdi-square-edit-outline</v-icon></div>
+            <div class="text-xs-center pt-5"><v-icon x-large >edit</v-icon></div>
             <v-form v-model="cardValid" lazy-validation ref="payload">                     
                 <v-text-field
                   v-model="card_person"
@@ -187,7 +187,7 @@
                   outline
                   d-flex
                   label="Держатель карты"
-                  append-icon="mdi-account-box"
+                  append-icon="person"
                   hint="Напишите  имю и фамилию  с латинскими буквами через пробел, как в карточке"
                   class="px-2 pt-4 pb-3"
                   required>
@@ -198,7 +198,7 @@
                   outline
                   d-flex
                   label="Номер карты"
-                  append-icon="mdi-credit-card"
+                  append-icon="credit_card"
                   class="px-2"
                   required>
                 </v-text-field>

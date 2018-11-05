@@ -25,8 +25,6 @@
                 <v-carousel  
                     class="product-carousel" 
                     light
-                    prev-icon="mdi-arrow-left-drop-circle"
-                    next-icon="mdi-arrow-right-drop-circle"
                     >
                     <v-carousel-item  
                         v-for="(item, i) in images"
@@ -55,7 +53,7 @@
                             outline
                             @click="toCart()">
                             В корзину
-                        <v-icon  right>mdi-cart</v-icon>
+                        <v-icon  right>add_shopping_cart</v-icon>
                         </v-btn>
                     </v-flex>
                     <v-flex xs12 sm6 md6 class=" px-2 mt-4">
@@ -186,8 +184,8 @@ export default{
                             this.error_code = "404";
                             this.error_name = "СТРАНИЦА НЕ НАЙДЕНА!";
                         }                      
-                        this.error=true
-                        this.preloader=false
+                        this.error=true;
+                        this.preloader=false;
                     });
     },
     methods:{

@@ -32,7 +32,7 @@
         exact        
         ripple>
           <v-list-tile-action>
-            <v-icon>mdi-home</v-icon>
+            <v-icon>home</v-icon>
           </v-list-tile-action>
           <v-list-tile-content>
             <v-list-tile-title>Главная</v-list-tile-title>
@@ -72,15 +72,14 @@
     </v-navigation-drawer>
     <v-toolbar fixed app :clipped-left="clipped" color="primary" dark class="toolbar-back">
         <v-btn @click="drawer = !drawer" icon>
-          <v-icon>mdi-menu</v-icon>
+          <v-icon>menu</v-icon>
           </v-btn>      
       <v-btn
         class="hidden-sm-and-down"
         icon
         @click.stop="miniVariant = !miniVariant">
-          <v-icon v-html="miniVariant ? 'mdi-format-horizontal-align-right' : 'mdi-format-horizontal-align-left'">
-          </v-icon>
-        
+          <v-icon v-html="miniVariant ? 'chevron_right' : 'chevron_left'">
+          </v-icon>        
       </v-btn>
       <v-toolbar-title v-text="title" class="hidden-sm-and-down"></v-toolbar-title> 
       <v-layout row wrap align-center>
@@ -88,13 +87,12 @@
           <v-text-field 
             solo
             label="Поиск"
-            append-icon="mdi-magnify"
+            append-icon="search"
             light
             style="width:50%; display:inline-block">
           </v-text-field>
         </v-flex>
-      </v-layout> 
-          
+      </v-layout>           
       <v-tooltip bottom>
       <v-btn
         slot="activator"
@@ -102,22 +100,20 @@
         :to="`/cart`">
         <v-badge color="error" v-if="cart!=0">
           <span slot="badge" >{{cart}}</span>
-          <v-icon>mdi-cart</v-icon>
+          <v-icon>shopping_cart</v-icon>
         </v-badge>
-        <v-icon v-else>mdi-cart</v-icon>
+        <v-icon v-else>shopping_cart</v-icon>
       </v-btn>
       <span>Корзина</span>
     </v-tooltip>
-
       <v-tooltip bottom>
       <v-btn
         slot="activator"
         icon>
-      <v-icon>mdi-account</v-icon>
+      <v-icon>account_box</v-icon>
       </v-btn>
       <span>Личный кабинет</span>
-    </v-tooltip>
-      
+    </v-tooltip>      
     </v-toolbar>
     <v-content>
       <v-container class="main-back">
@@ -125,10 +121,8 @@
       </v-container>
     </v-content>
   </v-app>
-</div>
- 
+</div> 
 </template>
-
 <script>
 import MenuItem from '~/components/menu/MenuItem.vue'
 import Preloader from '~/components/loaders/Preloader.vue'

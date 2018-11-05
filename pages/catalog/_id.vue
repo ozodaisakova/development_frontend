@@ -106,7 +106,10 @@ export default {
                         this.for_breadcrumd.push({"src":"/catalog/"+values[0].id, "name": values[0].name});
                         })  
                     .catch(e=>{
-                        if(e.response.status==400){
+                        if(e.message=='Network Error'){
+                            this.error_code='Error';
+                            this.error_name="Нет соединения с Интернетом!";
+                        }else if(e.response.status==400){
                         this.error_code='400';
                         this.error_name="ОШИБКА ЗАПРОСА!";
                         }else if(e.response.status==404){

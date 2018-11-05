@@ -1,4 +1,5 @@
-import '@mdi/font/css/materialdesignicons.css' 
+// import '@mdi/font/css/materialdesignicons.css' 
+import 'material-design-icons/iconfont/material-icons.css'
 import 'vuetify/dist/vuetify.min.css'
 import Vue from 'vue'
 import {
@@ -33,6 +34,7 @@ import {
 } from 'vuetify'
 
 Vue.use(Vuetify, {
+  // iconfont: 'mdi',
   components: {
     VAlert,
     VDialog,

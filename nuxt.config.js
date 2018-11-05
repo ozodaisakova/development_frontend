@@ -11,7 +11,9 @@ export default {
     ],
     link: [
       { rel: 'icon', type: 'image/x-icon', href: '/t-image.png' },
-      { rel: 'stylesheet', href: 'https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Material+Icons' }
+      { rel: 'stylesheet', href: 'https://fonts.googleapis.com/css?family=Roboto:300,400,500,700' },
+      // { rel: 'stylesheet', href: '/iconfont/material-icons.css' },
+      // { rel: 'stylesheet', href: 'https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Material+Icons' }
     ]
   },
   modules:['@nuxtjs/axios'],
@@ -33,7 +35,8 @@ export default {
 
   },
   plugins: [
-    '~/plugins/vuetify.js'
+    {src:'~/plugins/vuetify.js', ssr:true},
+    {src:'~/plugins/particles.js', ssr:false}
   ],
   css: [
     '~/assets/style/app.styl',
