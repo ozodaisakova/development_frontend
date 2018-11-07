@@ -4,7 +4,7 @@
     <center>
       <div>
         <Preloader></Preloader>
-      </div>
+      </div> 
     </center>
   </div>
  <v-app   v-else>
