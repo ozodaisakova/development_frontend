@@ -1,46 +1,39 @@
 <template>
-  <v-stepper v-model="e6" vertical>
-    <v-stepper-step :complete="e6 > 1" step="1">
-      Select an app
-      <small>Summarize if needed</small>
-    </v-stepper-step>
+<div>
+  <h2>Статистика продаж</h2>
 
-    <v-stepper-content step="1">
-      <v-card color="grey lighten-1" class="mb-5" height="200px"></v-card>
-      <v-btn color="primary" @click="e6 = 2">Continue</v-btn>
-      <v-btn flat>Cancel</v-btn>
-    </v-stepper-content>
+  <div class="card">
+    <header>
+      <chartjs-line 
+        v-bind:beginzero="beginZero"
+        v-bind:labels="labels[radio]"
+        v-bind:datalabel="dataLabel"
+        v-bind:data="data[radio]"
+        v-bind:backgroundcolor="bgColor"
+        v-bind:bordercolor="borderColor"
+        v-bind:bind="true"/>
+    </header>
 
-    <v-stepper-step :complete="e6 > 2" step="2">Configure analytics for this app</v-stepper-step>
-
-    <v-stepper-content step="2">
-      <v-card color="grey lighten-1" class="mb-5" height="200px"></v-card>
-      <v-btn color="primary" @click="e6 = 3">Continue</v-btn>
-      <v-btn flat>Cancel</v-btn>
-    </v-stepper-content>
-
-    <v-stepper-step :complete="e6 > 3" step="3">Select an ad format and name ad unit</v-stepper-step>
-
-    <v-stepper-content step="3">
-      <v-card color="grey lighten-1" class="mb-5" height="200px"></v-card>
-      <v-btn color="primary" @click="e6 = 4">Continue</v-btn>
-      <v-btn flat>Cancel</v-btn>
-    </v-stepper-content>
-
-    <v-stepper-step step="4">View setup instructions</v-stepper-step>
-    <v-stepper-content step="4">
-      <v-card color="grey lighten-1" class="mb-5" height="200px"></v-card>
-      <v-btn color="primary" @click="e6 = 1">Continue</v-btn>
-      <v-btn flat>Cancel</v-btn>
-    </v-stepper-content>
-  </v-stepper>
+  </div>
+</div>
 </template>
+
 <script>
-  export default {
-    data () {
-      return {
-        e6: 1
-      }
-    }
+export default {
+  data() {
+    return {
+      beginZero: true,
+      labels: {
+        week: ["Пн", "Вт", "Ср", "Чт", "Пт", "Сб", "Вс"]
+      },
+      dataLabel: "Проданные товары",
+      radio: "week",
+      data: {
+        week: [4, 2, 11, 1, 5, 3, 7]
+      },
+      bgColor: "#ff8a80",
+      borderColor: "#f44336"
+    };
   }
+};
 </script>

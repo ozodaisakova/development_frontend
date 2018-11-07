@@ -1,5 +1,5 @@
 <template>
-    <v-flex xs12 sm6 md3 class="pa-3">
+    <v-flex xs12 sm6 md3 class="pa-1">
         <v-card color="primary" class="white--text">
             <v-card-actions >
                 <div class="subheading"> {{title}}</div>
@@ -9,7 +9,7 @@
                 <v-flex xs7>
                   <v-card-title primary-title>
                     <div>
-                      <div class="display-2 font-weight-regular text-xs-center">{{count}}</div>
+                      <div class="display-2 font-weight-thin text-xs-center">{{count}}</div>
                     </div>
                   </v-card-title>
                 </v-flex>

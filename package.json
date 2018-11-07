@@ -12,6 +12,8 @@
   },
   "dependencies": {
     "@nuxtjs/axios": "^5.3.3",
+    "chart.js": "^2.7.3",
+    "hchs-vue-charts": "^1.2.8",
     "material-design-icons": "^3.0.1",
     "nuxt": "^2.1.0",
     "roboto-fontface": "^0.10.0",

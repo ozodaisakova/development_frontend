@@ -35,8 +35,9 @@ export default {
 
   },
   plugins: [
-    {src:'~/plugins/vuetify.js', ssr:true},
-    {src:'~/plugins/particles.js', ssr:false}
+    {src: '~/plugins/vuetify.js', ssr: true},
+    {src: '~/plugins/particles.js', ssr: false},
+    {src: '~/plugins/chart.js', ssr: false}
   ],
   css: [
     '~/assets/style/app.styl',
