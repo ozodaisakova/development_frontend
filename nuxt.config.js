@@ -41,6 +41,7 @@ export default {
   ],
   loading: { color: '#3B8070' },
   build: {
+    analyze: true,
     postcss: false,
     vendor: ['axios'],
     transpile: [/^vuetify/],
@@ -55,7 +56,8 @@ export default {
       ]
     },
     extractCSS: true,
-    extend (config, {isDev}) {
+    extend (config, {isDev, isClient}) {
+      
       if (isDev && process.client) {
         config.module.rules.push({
           enforce: 'pre',
