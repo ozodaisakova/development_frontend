@@ -30,18 +30,11 @@ export default {
       return config
     }   
   },
-  router: {
-    middleware: 'i18n'
-  },
   plugins: [
     {src: '~/plugins/vuetify.js', ssr: true},
     {src: '~/plugins/particles.js', ssr: false},
-    {src: '~/plugins/chart.js', ssr: false},
-    {src: '~/plugins/i18n.js', ssr: true}
+    {src: '~/plugins/chart.js', ssr: false}
   ],
-  generate: {
-    routes: ['/', '/about', '/ru', '/ru/about']
-  },
   css: [
     '~/assets/style/app.styl',
     '~/assets/style/main.css',
