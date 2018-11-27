@@ -317,8 +317,5 @@ import Preloader from '~/components/loaders/Preloader.vue'
   position: relative;
   background-color: black;
   color: aliceblue;
-}
-
-
-</style>
+}</style>
 

@@ -1,7 +1,4 @@
 export default {
-  /*
-  ** Headers of the page
-  */
   head: {
     title: 'Tak-mebel',
     meta: [
@@ -32,25 +29,26 @@ export default {
       config.headers.common['Content-Type'] = 'application/x-www-form-urlencoded;application/json';
       return config
     }   
-
+  },
+  router: {
+    middleware: 'i18n'
   },
   plugins: [
     {src: '~/plugins/vuetify.js', ssr: true},
     {src: '~/plugins/particles.js', ssr: false},
-    {src: '~/plugins/chart.js', ssr: false}
+    {src: '~/plugins/chart.js', ssr: false},
+    {src: '~/plugins/i18n.js', ssr: true}
   ],
+  generate: {
+    routes: ['/', '/about', '/ru', '/ru/about']
+  },
   css: [
     '~/assets/style/app.styl',
     '~/assets/style/main.css',
   ],
-  /*
-  ** Customize the progress bar color
-  */
   loading: { color: '#3B8070' },
-  /*
-  ** Build configuration
-  */
   build: {
+    postcss: false,
     vendor: ['axios'],
     transpile: [/^vuetify/],
     babel: {
@@ -64,9 +62,6 @@ export default {
       ]
     },
     extractCSS: true,
-    /*
-    ** Run ESLint on save
-    */
     extend (config, {isDev}) {
       if (isDev && process.client) {
         config.module.rules.push({

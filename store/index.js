@@ -1,9 +1,12 @@
 import Vuex from 'vuex';
+import { switchStatement } from 'babel-types';
 const createStore = ()=>{
   return new Vuex.Store({
     state: {
       base_url: 'http://localhost:3000/',
-      cart_count: 0
+      cart_count: 0,
+      locales: ['ru', 'kz'],
+      locale: 'ru'
     },
     getters: {
       cart_count:state=>{
@@ -17,6 +20,11 @@ const createStore = ()=>{
       },
       DECREMENT_CART(state, value){
         state.cart_count = value;
+      },
+      SET_LANG(state, locale){
+        if(state.locales.indexOf(locale)!==-1){
+          state.locale = locale
+        }
       }
     },
     actions: {
