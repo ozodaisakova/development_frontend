@@ -35,7 +35,7 @@
     height: 100%;
 }
 .back-image{
-    z-index: -2 ;
+    z-index: -2;
     background: #2DC6C1;    
     background: linear-gradient(145deg,#19E9A6, #95FD48);
     /* background-image:  url('/tree.jpg') ; */
