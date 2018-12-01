@@ -4,6 +4,7 @@ export default {
     meta: [
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
+      {'http-equiv': 'X-UA-Compatible', content: 'IE=edge'},
       { hid: 'description', name: 'description', content: 'Tak-mebel' }
     ],
     link: [
@@ -33,7 +34,8 @@ export default {
   plugins: [
     {src: '~/plugins/vuetify.js', ssr: true},
     {src: '~/plugins/particles.js', ssr: false},
-    {src: '~/plugins/chart.js', ssr: false}
+    {src: '~/plugins/chart.js', ssr: false},
+    {src: '~/plugins/select.js', ssr: false}
   ],
   css: [
     '~/assets/style/app.styl',
@@ -41,7 +43,7 @@ export default {
   ],
   loading: { color: '#3B8070' },
   build: {
-    analyze: true,
+    // analyze: true,
     postcss: false,
     vendor: ['axios'],
     transpile: [/^vuetify/],

@@ -108,8 +108,6 @@ export default {
                 localStorage.setItem('cart_product_count', json.length.toString());
                 this.$store.dispatch('decrement_cart', json.length);
                 this.getProdutcs();
-
-
             }
         }
 

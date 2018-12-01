@@ -20,6 +20,7 @@ import VList from 'vuetify/es5/components/VList'
 import VNavigationDrawer from 'vuetify/es5/components/VNavigationDrawer'
 import VPagination from 'vuetify/es5/components/VPagination'
 import VProgressCircular from 'vuetify/es5/components/VProgressCircular'
+import VProgressLinear from 'vuetify/es5/components/VProgressLinear'
 import VSelect from 'vuetify/es5/components/VSelect'
 import VSubheader from 'vuetify/es5/components/VSubheader'
 import VSnackbar from 'vuetify/es5/components/VSnackbar'
@@ -29,14 +30,18 @@ import VTextarea from 'vuetify/es5/components/VTextarea'
 import VTextField from 'vuetify/es5/components/VTextField'
 import VToolbar from 'vuetify/es5/components/VToolbar'
 import VTooltip from 'vuetify/es5/components/VTooltip'
+import VDataTable from 'vuetify/es5/components/VDataTable'
+import VSwitch from 'vuetify/es5/components/VSwitch'
 import Vuetify from 'vuetify/es5/components/Vuetify'
 
 Vue.use(Vuetify, {
   // iconfont: 'mdi',
   components: {
+    VProgressLinear,
     VAlert,
     VBreadcrumbs,
     VDialog,
+    VDataTable,
     VForm,
     VTextarea,
     VStepper,
@@ -60,7 +65,8 @@ Vue.use(Vuetify, {
     VIcon,
     VGrid,
     VToolbar,
-    VTooltip
+    VTooltip,
+    VSwitch
   },
   
     theme: {

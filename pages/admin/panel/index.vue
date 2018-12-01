@@ -53,7 +53,7 @@ export default {
                     },
                     {
                     text: 'Панель состояния',
-                    href: 'breadcrumbs_link_1'
+                    
                     }
             ],
             beginZero: true,

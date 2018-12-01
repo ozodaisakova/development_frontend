@@ -15,10 +15,10 @@
             <any-error v-if="error==true" v-bind:error_code="error_code" v-bind:error_name="error_name"></any-error>
         <v-layout row wrap v-else>
              <v-flex d-flex xs12 sm12 md8>
-                    <store-bread-crumbs 
+                    <v-breadcrumbs
                         class="hidden-sm-and-down"
-                        v-bind:data="for_breadcrumd">                        
-                    </store-bread-crumbs>                    
+                        v-bind:items="for_breadcrumd">                        
+                    </v-breadcrumbs>                    
             </v-flex>
             <v-flex xs12 sm6 md7 d-flex  align-center class=" v-card theme--light mt-3"   color="primary">
             <v-flex>
@@ -148,7 +148,7 @@ export default{
             error: false,
             error_code: "---",
             error_name: 'НЕИВЕСТНАЯ ОШИБКА',
-            for_breadcrumd: [{src: "/", name:"Главная"}],
+            for_breadcrumd: [{href: "/", text:"Главная"}],
             short_description: ''
         }    
     },
@@ -163,8 +163,8 @@ export default{
                     .then(values=>{
                         this.product=values[0][0];
                         this.images=JSON.parse(values[0][0].images);
-                        this.for_breadcrumd.push({"src":"/catalog/"+values[0][0].catalog.id, "name": values[0][0].catalog.name});
-                        this.for_breadcrumd.push({"src":"/product/"+values[0][0].id, "name": values[0][0].name});
+                        this.for_breadcrumd.push({"href":"/catalog/"+values[0][0].catalog.id, "text": values[0][0].catalog.name});
+                        this.for_breadcrumd.push({"href":"/product/"+values[0][0].id, "text": values[0][0].name, disabled: true});
                         if(values[0][0].colors!=null) this.colors=JSON.parse(values[0][0].colors);
                         if(values[0][0].description&&values[0][0].description.length>250)
                             this.short_description=values[0][0].description.substr(0, 250)+'...';

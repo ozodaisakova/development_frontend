@@ -11,10 +11,10 @@
             <div  v-if="products.data!=''">            
             <v-layout row wrap >
                 <v-flex d-flex xs12 sm12 md8>
-                    <store-bread-crumbs 
+                    <v-breadcrumbs
                         class="hidden-sm-and-down"
-                        v-bind:data="for_breadcrumd">                        
-                    </store-bread-crumbs>                    
+                        v-bind:items="for_breadcrumd">                        
+                    </v-breadcrumbs>                    
                 </v-flex>
                 <v-flex d-flex xs12 sm4 md4>
                     <v-select
@@ -69,7 +69,7 @@ export default {
             catalog:[],
             products:[],
             for_breadcrumd:[
-                { src: "/", name: "Главная" }
+                { href: "/", text: "Главная" }
             ],
             scrollToTop: true,
             page: 1,
@@ -103,7 +103,7 @@ export default {
                         this.total_page=values[1].last_page;
                         this.current_page=values[1].current_page;
                         this.productloader=false;
-                        this.for_breadcrumd.push({"src":"/catalog/"+values[0].id, "name": values[0].name});
+                        this.for_breadcrumd.push({"href":"/catalog/"+values[0].id, "text": values[0].name, disabled: true});
                         })  
                     .catch(e=>{
                         if(e.message=='Network Error'){

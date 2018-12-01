@@ -38,7 +38,7 @@
         <v-divider></v-divider>
         <v-list-tile 
         router
-        to="/"
+        to="/admin/panel"
         exact        
         ripple>
           <v-list-tile-action>
