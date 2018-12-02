@@ -24,6 +24,7 @@
                             <v-card-title>
                                 <h1 class="title mt-3">Добавить новую категорию</h1>
                             </v-card-title>
+                            <v-divider></v-divider>
                             <v-card-text>
                                 <v-form  v-model="valid" lazy-validation ref="form">
                                     <v-text-field 
@@ -46,12 +47,13 @@
                                     :label="hiddenText"
                                     color="indigo darken-3"
                                     v-model="hidden"></v-switch>
+                            </v-card-text>
+                            <v-divider></v-divider>
+                            <v-card-actions class="pa-3">
                                 <v-spacer></v-spacer>
-                                <br>
                                 <v-btn color="blue darken-1" flat @click="dialog=!dialog">Закрыть</v-btn>
                                 <v-btn color="blue darken-1" flat @click="saveItem()">Сохранить</v-btn>
-                                <br><br>
-                            </v-card-text>
+                            </v-card-actions>
                         </v-card>
                     </v-dialog>                       
                 </v-flex> 
@@ -73,12 +75,8 @@
                 slot="items" 
                 slot-scope="props">
                 <td>{{ props.item.name }}</td>               
-                <td >
-                    <v-icon> {{ props.item.icon }} </v-icon>                    
-                </td>
-                <td>
-                    {{ props.item.hidden }}
-                </td>
+                <td><v-icon> {{ props.item.icon }}</v-icon></td>
+                <td>{{ props.item.hidden }}</td>
                 <td>
                     <v-tooltip bottom>
                         <v-icon
@@ -94,7 +92,7 @@
                         <v-icon
                            slot="activator"                            
                             class="delete_hover"
-                            @click="deleteItem()">
+                            @click="deleteItem(props.item)">
                             delete
                         </v-icon>
                         <span>Удалить</span>
@@ -108,6 +106,7 @@
         <v-card-title>
             <h1 class="title mt-3">Редактировать категорию</h1>
         </v-card-title>
+        <v-divider></v-divider>
         <v-card-text>
             <v-form  v-model="valid" lazy-validation ref="editform">
                 <v-text-field 
@@ -130,14 +129,68 @@
                 :label="editHiddenText"
                 color="indigo darken-3"
                 v-model="editHidden"></v-switch>
-            <v-spacer></v-spacer>
-            <br>
-            <v-btn color="blue darken-1" flat @click="editDialog=!editDialog">Закрыть</v-btn>
-            <v-btn color="blue darken-1" flat @click="updateItem()">Сохранить</v-btn>
-            <br><br>
+            <v-spacer></v-spacer>            
         </v-card-text>
+        <v-divider></v-divider>
+        <v-card-actions class="pa-2">
+            <v-spacer></v-spacer>
+            <v-btn color="blue darken-1" flat @click="editDialog=!editDialog">Закрыть</v-btn>
+            <v-btn color="blue darken-1" flat @click="updateItem()">Обновить</v-btn>
+        </v-card-actions>
     </v-card>
-</v-dialog>                
+</v-dialog>  
+<v-dialog
+    v-model="errorDialog"
+    width="500px">
+    <v-card>
+        <v-card-title
+            class="headline red--text lighten-1"
+            primary-title>
+            Ошибка
+        </v-card-title>
+        <v-divider></v-divider>
+        <v-card-text>
+            <h1 class="display-1 font-weight-bold text-xs-center">Ошибка {{requestErrorStatus}}</h1>
+            <p  class="title text-xs-center">{{requestErrorText}}</p>
+        </v-card-text>
+        <v-divider></v-divider>
+        <v-card-actions class="pa-3">
+            <v-spacer></v-spacer>
+            <v-btn 
+                color="primary"
+                flat
+                @click="errorDialog=!errorDialog">Закрыть</v-btn>
+        </v-card-actions>
+    </v-card>
+</v-dialog> 
+<v-dialog 
+    v-model="deleteDialog"
+    max-width="500"
+    >
+    <v-card>
+    <v-card-title><h1 class="title">Потвердите действие</h1></v-card-title>
+    <v-divider></v-divider>
+    <v-card-text>
+        Вы действительно хотите удалить категорию "<b>{{deletedItem.name}}</b>" ?
+    </v-card-text>
+    <v-divider></v-divider>
+    <v-card-actions>
+        <v-spacer></v-spacer>
+        <v-btn 
+            flat 
+            color="green lighten-1"
+            @click="destroyItem()">
+            Да
+            </v-btn>
+        <v-btn 
+            flat 
+            @click="deleteDialog=!deleteDialog"
+            color="green lighten-1">
+            Нет
+            </v-btn>
+    </v-card-actions>
+    </v-card>
+</v-dialog>             
 <v-snackbar
     top
     v-model="snackbar"
@@ -205,7 +258,12 @@ export default{
             editHidden: true,
             editHiddenText: 'Видимый',
             editID: 0,
-            editedItem:[]
+            editedItem:[],
+            errorDialog: false,
+            requestErrorStatus:'',
+            requestErrorText: '',
+            deletedItem: [],
+            deleteDialog: false
         }
     },
     components:{
@@ -254,13 +312,16 @@ export default{
                         icon: icon,
                         hidden: hidden
                     })
-                    .then(function (response){
+                    .then(response=>{
                         this.dialog=false; 
                         this.getCategories();
                         this.snackbar=true;                                               
                     })
-                    .catch(function (error){
-                        console.log("ERROR: "+error);
+                    .catch(error=>{
+                        this.dialog=false;
+                        this.requestErrorStatus=error.response.status;
+                        this.requestErrorText=error.response.data.message;
+                        this.errorDialog=true;
                     });
             }
         },
@@ -289,26 +350,43 @@ export default{
                 if(this.editIcon=='') {
                     this.errorSelect=true;
                     return;
-                }   
-                this.$axios.$patch('catalog/',{
+                }  
+                this.$axios.$put('catalog/'+this.editID,{
                         id: this.editID,
                         name: name,
                         icon: icon,
                         hidden: hidden
                     })    
-                    .then(function(response){
+                    .then(response=>{
+                        this.snackbar=true;
                         this.editDialog=false; 
-                        this.getCategories();
-                        this.snackbar=true; 
+                        this.getCategories();                         
                     })
-                    .catch(function(error){
-                        console.log("ERROR:", error)
-                    });              
-            }
-            
+                    .catch(error=>{
+                        this.editDialog=false;
+                        this.requestErrorStatus=error.response.status;
+                        this.requestErrorText=error.response.data.message;
+                        this.errorDialog=true;
+                    });             
+            }            
         },
-        deleteItem(){
-
+        deleteItem(deletedItem){
+            this.deletedItem = deletedItem;
+            this.deleteDialog=true;
+        },
+        destroyItem(){
+            var id = this.deletedItem.id;
+            this.$axios.$delete('catalog/'+id)
+                .then(response=>{
+                    this.deleteDialog = false;
+                    this.getCategories();
+                    this.snackbar=true;
+                })
+                .catch(error=>{
+                    this.errorDialog = true;
+                    this.requestErrorStatus =error.status;
+                    this.requestErrorText=error.data;
+                });
         }
     }
 }
